@@ -3,13 +3,16 @@ package com.allthemods.gravitas2.data.recipe;
 import com.allthemods.gravitas2.GregitasCore;
 import com.allthemods.gravitas2.data.recipe.builder.CollapseRecipeBuilder;
 import com.allthemods.gravitas2.material.GregitasMaterials;
+import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.block.MaterialBlock;
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
+import com.gregtechceu.gtceu.api.data.chemical.material.registry.MaterialRegistry;
 import com.gregtechceu.gtceu.api.data.chemical.material.stack.UnificationEntry;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.api.registry.GTRegistries;
+import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
 import com.gregtechceu.gtceu.common.data.GTBlocks;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.data.recipe.VanillaRecipeHelper;
@@ -57,13 +60,15 @@ public class GregitasRecipes {
         ChemicalHelper.registerUnificationItems(TagPrefix.rock, GregitasMaterials.Gneiss, TFCBlocks.ROCK_BLOCKS.get(Rock.GNEISS).values().stream().map(Supplier::get).toArray(ItemLike[]::new));
         ChemicalHelper.registerUnificationItems(TagPrefix.rock, GTMaterials.Marble, TFCBlocks.ROCK_BLOCKS.get(Rock.MARBLE).values().stream().map(Supplier::get).toArray(ItemLike[]::new));
 
-        for (Material material : GTRegistries.MATERIALS) {
-            if (!material.hasProperty(PropertyKey.ORE)) continue;
+        for (MaterialRegistry registry : GTCEuAPI.materialManager.getRegistries()) {
+            for (Material material : registry.getAllMaterials()) {
+                if (!material.hasProperty(PropertyKey.ORE)) continue;
 
-            for (TagPrefix prefix : TagPrefix.ORES.keySet()) {
-                BlockEntry<? extends MaterialBlock> block = GTBlocks.MATERIAL_BLOCKS.get(prefix, material);
-                if (block != null && block.isPresent()) {
-                    new CollapseRecipeBuilder().ingredient(block.get()).result(block.get()).save(provider);
+                for (TagPrefix prefix : TagPrefix.ORES.keySet()) {
+                    BlockEntry<? extends MaterialBlock> block = GTBlocks.MATERIAL_BLOCKS.get(prefix, material);
+                    if (block != null && block.isPresent()) {
+                        new CollapseRecipeBuilder().ingredient(block.get()).result(block.get()).save(provider);
+                    }
                 }
             }
         }

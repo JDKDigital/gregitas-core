@@ -82,6 +82,11 @@ public class NotifiablePressureContainer extends NotifiableRecipeHandlerTrait<Do
     }
 
     @Override
+    public List<Object> getContents() {
+        return List.of(); // TODO return something here
+    }
+
+    @Override
     public RecipeCapability<Double> getCapability() {
         return PressureRecipeCapability.CAP;
     }

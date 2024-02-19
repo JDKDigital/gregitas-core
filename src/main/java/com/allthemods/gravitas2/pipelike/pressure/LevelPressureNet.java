@@ -1,10 +1,11 @@
 package com.allthemods.gravitas2.pipelike.pressure;
 
-import com.lowdragmc.lowdraglib.pipelike.LevelPipeNet;
+import com.gregtechceu.gtceu.api.pipenet.LevelPipeNet;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 
-public class LevelPressureNet extends LevelPipeNet<PressurePipeData, PressurePipeNet> {
+public class LevelPressureNet extends LevelPipeNet<PressurePipeData, PressurePipeNet>
+{
 
     public static LevelPressureNet getOrCreate(ServerLevel serverLevel) {
         return serverLevel.getDataStorage().computeIfAbsent(tag -> new LevelPressureNet(serverLevel, tag), () -> new LevelPressureNet(serverLevel), "gregitas_pressure_pipe_net");
