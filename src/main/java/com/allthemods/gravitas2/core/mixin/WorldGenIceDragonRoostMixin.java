@@ -1,9 +1,6 @@
 package com.allthemods.gravitas2.core.mixin;
 
-import com.github.alexthe666.iceandfire.world.gen.WorldGenFireDragonRoosts;
 import com.github.alexthe666.iceandfire.world.gen.WorldGenIceDragonRoosts;
-import net.dries007.tfc.common.blocks.TFCBlocks;
-import net.dries007.tfc.common.blocks.rock.Rock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
